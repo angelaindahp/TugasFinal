@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'idea'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JUnit 4 untuk menjalankan Cucumber
+    testImplementation 'junit:junit:4.13.2'
+
+    // Cucumber untuk Testing
+    testImplementation 'io.cucumber:cucumber-java:7.14.0'
+    testImplementation 'io.cucumber:cucumber-junit:7.14.0'
+
+    // RestAssured untuk API Testing
+    testImplementation 'io.rest-assured:rest-assured:5.3.0'
+
+    // Selenium untuk Web UI Testing
+    testImplementation 'org.seleniumhq.selenium:selenium-java:4.16.1'
+
+    // WebDriver Manager untuk mengelola browser driver otomatis
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.6.2'
+}
+
+test {
+    useJUnit() // Pastikan menggunakan JUnit 4
+    testLogging.showStandardStreams = true
+}
+
+tasks.register('apiTest', Test) {
+    useJUnit()
+    systemProperty 'cucumber.filter.tags', '@api'
+    testLogging.showStandardStreams = true
+}
+
+tasks.register('webTest', Test) {
+    useJUnit()
+    systemProperty 'cucumber.filter.tags', '@web'
+    testLogging.showStandardStreams = true
+}
+
